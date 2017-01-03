@@ -1,5 +1,6 @@
 ﻿using OMG.LunchPicker.Objects.Domain;
 using OMG.LunchPicker.Objects.Domain.Criteria;
+using OMG.LunchPicker.Objects.Domain.Validators;
 using OMG.LunchPicker.Objects.Entities;
 using OMG.LunchPicker.Repository;
 using System;
@@ -16,6 +17,7 @@ namespace OMG.LunchPicker.Services
         /// The repository
         /// </summary>
         private readonly IRestaurantRepository _repository;
+        private readonly IRestaurantValidator _validator;
         #endregion
 
         #region Ctors
@@ -23,9 +25,12 @@ namespace OMG.LunchPicker.Services
         /// Initializes a new instance of the <see cref="OrderService"/> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
-        public RestaurantService(IRestaurantRepository repository)
+        public RestaurantService(IRestaurantRepository repository, IRestaurantValidator validator)
         {
             _repository = repository;
+            _validator = validator;
+
+            ValidationMessages = new List<string>();
         }
         #endregion
 
@@ -34,6 +39,9 @@ namespace OMG.LunchPicker.Services
         {
             try
             {
+                if (await _validator.ValidateAsync(criteria, ValidationMessages) == false)
+                    return ErrorResponse<dynamic>(ValidationMessages);
+
                 var result = await _repository.GetAllAsync(criteria);
                 return SuccessResponse(result.ToList(), criteria);
             }
@@ -48,6 +56,9 @@ namespace OMG.LunchPicker.Services
         {
             try
             {
+                if (await _validator.ValidateAsync(criteria, ValidationMessages) == false)
+                    return ErrorResponse<dynamic>(ValidationMessages, true);
+
                 var result = await _repository.GetAsync(criteria);
                 return SuccessResponse(result);
             }
@@ -62,7 +73,8 @@ namespace OMG.LunchPicker.Services
         {
             try
             {
-                
+                if (await _validator.ValidateAsync(criteria, ValidationMessages) == false)
+                    return ErrorResponse<int>(ValidationMessages, true);
 
                 var result = await _repository.SaveAsync(criteria);
                 return SuccessResponse(result);
@@ -74,18 +86,21 @@ namespace OMG.LunchPicker.Services
             }
         }
 
-        public async Task<SingleItemResponse<Rating>> RateAsync(Rating rating)
+        public async Task<SingleItemResponse<dynamic>> RateAsync(RateRestaurantCriteria criteria)
         {
             try
             {
-                var result = await _repository.RateAsync(rating);
+                if (await _validator.ValidateAsync(criteria, ValidationMessages) == false)
+                    return ErrorResponse<dynamic>(ValidationMessages, true);
+
+                var result = await _repository.RateAsync(criteria);
                 return SuccessResponse(result);
             }
             catch (Exception ex)
             {
 
                 List<string> errors = new List<string>() { ex.Message.ToString() };
-                return ErrorResponse<Rating>(errors, false);
+                return ErrorResponse<dynamic>(errors, false);
             }
         }
         #endregion

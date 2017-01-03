@@ -34,15 +34,12 @@ namespace OMG.LunchPicker.WebApi.Controllers
         #endregion
 
         #region Public Methods
-
-
         /// <summary>
         /// Gets the active restaurants.
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns></returns>
         [HttpPost, Route("GetRestaurants", Name = "RestaurantsRoute")]
-        //public async Task<IHttpActionResult> GetActiveRestaurants(int page = 0, int pageSize = 10, string sortBy = "ID", bool reverse = false)
         public async Task<IHttpActionResult> GetActiveRestaurants(GetRestaurantsCriteria criteria)
         {
             if (criteria == null)
@@ -54,7 +51,6 @@ namespace OMG.LunchPicker.WebApi.Controllers
 
         [HttpPost]
         [Route("GetRestaurant", Name = "SingleRestaurantRoute")]
-        //public async Task<IHttpActionResult> GetActiveRestaurants(int page = 0, int pageSize = 10, string sortBy = "ID", bool reverse = false)
         public async Task<IHttpActionResult> GetRestaurant(GetByIdCriteria criteria)
         {
             var restaurant = await _service.GetAsync(criteria);
@@ -74,14 +70,9 @@ namespace OMG.LunchPicker.WebApi.Controllers
 
         [HttpPost]
         [Route("RateRestaurant", Name = "RateRestaurantRoute")]
-        //public async Task<IHttpActionResult> GetActiveRestaurants(int page = 0, int pageSize = 10, string sortBy = "ID", bool reverse = false)
-        public async Task<IHttpActionResult> RateRestaurant()
+        public async Task<IHttpActionResult> RateRestaurant(RateRestaurantCriteria criteria)
         {
-            Rating rating = new Rating();
-            rating.UserId = 1;
-            rating.RestaurantId = 6;
-            rating.RatingValue = 5;
-            var result = await _service.RateAsync(rating);
+            var result = await _service.RateAsync(criteria);
             return Ok(result);
         }
         #endregion

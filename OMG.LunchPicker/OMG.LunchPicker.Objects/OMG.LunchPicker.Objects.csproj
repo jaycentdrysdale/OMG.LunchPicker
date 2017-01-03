@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -49,6 +50,7 @@
     </Compile>
     <Compile Include="Domain\Criteria\GetByIdCriteria.cs" />
     <Compile Include="Domain\Criteria\LoginCriteria.cs" />
+    <Compile Include="Domain\Criteria\RateRestaurantCriteria.cs" />
     <Compile Include="Domain\Criteria\SaveRestaurantCriteria.cs" />
     <Compile Include="Domain\Criteria\SaveUserCriteria.cs" />
     <Compile Include="Domain\Criteria\PagableCriteriaBase.cs" />

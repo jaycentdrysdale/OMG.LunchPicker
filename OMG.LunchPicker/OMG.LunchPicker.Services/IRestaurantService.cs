@@ -14,6 +14,6 @@ namespace OMG.LunchPicker.Services
         Task<SingleItemResponse<dynamic>> GetAsync(GetByIdCriteria criteria);
         Task<MultiItemsResponse<dynamic>> GetAllAsync(GetRestaurantsCriteria criteria);
         Task<SingleItemResponse<int>> SaveAsync(SaveRestaurantCriteria critera);
-        Task<SingleItemResponse<Rating>> RateAsync(Rating rating);
+        Task<SingleItemResponse<dynamic>> RateAsync(RateRestaurantCriteria criteria);
     }
 }

@@ -97,34 +97,37 @@ namespace OMG.LunchPicker.Repository
             catch (Exception e)
             {
                 UnitOfWorkAsync.Rollback();
-                //if (!e.InnerException.InnerException.GetType().IsAssignableFrom(typeof(SqlException))) throw;
-                //var exception = (SqlException)e.InnerException.InnerException;
-                //if (exception.Number == 2627)
-                //    throw new ApplicationException("Ad Account Id is not unique");
                 throw;
             }
             return restaurant.Id;
         }
 
-        public async Task<Rating> RateAsync(Rating rating)
+        public async Task<dynamic> RateAsync(RateRestaurantCriteria criteria)
         {
             UnitOfWorkAsync.BeginTransaction();
+
+            Rating rating = new Rating()
+            {
+                UserId = criteria.UserId,
+                RestaurantId = criteria.RestaurantId,
+                RatingValue = criteria.RatingValue
+            };
+
             try
             {
                 UnitOfWorkAsync.RepositoryAsync<Rating>().Insert(rating);
                 await UnitOfWorkAsync.SaveChangesAsync();
                 UnitOfWorkAsync.Commit();
+
+                return await GetAsync(new GetByIdCriteria() { Id = criteria.RestaurantId, IsActive = true });
             }
             catch (Exception e)
             {
                 UnitOfWorkAsync.Rollback();
-                //if (!e.InnerException.InnerException.GetType().IsAssignableFrom(typeof(SqlException))) throw;
-                //var exception = (SqlException)e.InnerException.InnerException;
-                //if (exception.Number == 2627)
-                //    throw new ApplicationException("Ad Account Id is not unique");
                 throw;
             }
-            return rating;
+
+            
         }
         #endregion
 
@@ -156,7 +159,7 @@ namespace OMG.LunchPicker.Repository
             .Include(r => r.Cuisines)
             .Where(r => r.Id == id).SingleOrDefaultAsync();
             return await Task.Run(() => query);
-        } 
+        }
         #endregion
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OMG.LunchPicker.Objects.Domain.Criteria;
+using System.ComponentModel.DataAnnotations;
 
 namespace OMG.LunchPicker.Objects.Domain.Validators
 {
@@ -37,6 +38,7 @@ namespace OMG.LunchPicker.Objects.Domain.Validators
 
         private bool ValidateSave(SaveUserCriteria criteria, List<string> messages)
         {
+
             int passwordlength = 5;
             
             if (string.IsNullOrWhiteSpace(criteria.Username))
@@ -44,9 +46,12 @@ namespace OMG.LunchPicker.Objects.Domain.Validators
 
             if (string.IsNullOrWhiteSpace(criteria.EmailAddress))
                 messages.Add("email address is required");
+            else if (new EmailAddressAttribute().IsValid(criteria.EmailAddress)==false)
+                messages.Add("email address is not valid");
 
             if (string.IsNullOrWhiteSpace(criteria.Password))
                 messages.Add("password is required");
+
             else if (criteria.Password.Length < 5)
                 messages.Add($"password length must be greater than {passwordlength} characters");
 

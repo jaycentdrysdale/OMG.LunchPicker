@@ -14,6 +14,6 @@ namespace OMG.LunchPicker.Repository
         Task<dynamic> GetAsync(GetByIdCriteria criteria);
         Task<IQueryable<dynamic>> GetAllAsync(GetRestaurantsCriteria criteria);
         Task<int> SaveAsync(SaveRestaurantCriteria critera);
-        Task<Rating> RateAsync(Rating rating);
+        Task<dynamic> RateAsync(RateRestaurantCriteria criteria);
     }
 }
