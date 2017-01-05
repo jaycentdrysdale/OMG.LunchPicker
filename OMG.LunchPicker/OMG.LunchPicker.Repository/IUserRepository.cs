@@ -13,5 +13,6 @@ namespace OMG.LunchPicker.Repository
         Task<dynamic> GetAsync(GetByIdCriteria criteria);
         Task<int> SaveAsync(SaveUserCriteria criteria);
         Task<User> AuthenticateAsync(LoginCriteria criteria);
+        Task<IQueryable<dynamic>> GetAllAsync(GetUsersCriteria criteria);
     }
 }

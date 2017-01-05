@@ -10,7 +10,9 @@
             $stateProvider
                 .state("dashboard", { url: "/", templateUrl: "/app/views/dashboard.html", controller: "dashboardController", controllerAs: 'vm' })
                 .state("orders", { url: "/orders", templateUrl: "/app/views/orders.html", controller: "ordersController" })
+                .state("login", { url: "/login", templateUrl: "/app/views/fake.html", controller: "fakeController", controllerAs: 'vm' })
                 .state("createorder", { url: "/createorder", templateUrl: "/app/views/create-order.html", controller: "createOrderController", controllerAs: 'vm' })
+                .state("createrestaurant", { url: "/createrestaurant", templateUrl: "/app/views/edit-restaurant.html", controller: "restaurantController", controllerAs: 'vm' })
                 .state("fake", { url: "/fake", templateUrl: "/app/views/fake.html", controller: "fakeController" })
                 .state("otherwise", { url: '/' })
             $urlRouterProvider.otherwise('/');

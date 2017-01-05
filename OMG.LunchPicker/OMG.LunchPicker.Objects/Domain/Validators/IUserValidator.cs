@@ -12,5 +12,6 @@ namespace OMG.LunchPicker.Objects.Domain.Validators
         Task<bool> ValidateAsync(SaveUserCriteria criteria, List<string> messages);
         Task<bool> ValidateAsync(GetByIdCriteria criteria, List<string> messages);
         Task<bool> ValidateAsync(LoginCriteria criteria, List<string> messages);
+        Task<bool> ValidateAsync(GetUsersCriteria criteria, List<string> messages);
     }
 }

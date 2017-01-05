@@ -14,5 +14,6 @@ namespace OMG.LunchPicker.Services
         Task<SingleItemResponse<dynamic>> GetAsync(GetByIdCriteria criteria);
         Task<SingleItemResponse<int>> SaveAsync(SaveUserCriteria criteria);
         Task<SingleItemResponse<User>> AuthenticateAsync(LoginCriteria criteria);
+        Task<MultiItemsResponse<dynamic>> GetAllAsync(GetUsersCriteria criteria);
     }
 }

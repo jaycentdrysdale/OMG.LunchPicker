@@ -1,0 +1,9 @@
+﻿{
+  "id": 0,
+  "name": "",
+  "street": "",
+  "city": "",
+  "state": "",
+  "zip": "",
+  "cuisineIds": [1,2]
+}

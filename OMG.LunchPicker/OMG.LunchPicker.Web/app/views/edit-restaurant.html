@@ -1,0 +1,105 @@
+﻿<section class="order-container page-form-ele page">
+    <form data-toggle="validator" role="form" ng-submit="vm.onSubmitRestaurant($event)" name="orderForm">
+
+        <div class="row ui-section">
+            <section class="panel panel-default">
+                <div class="panel-body padding-lg-h ui-ribbon-container">
+                    <div class="ui-ribbon-wrapper">
+                        <div class="ui-ribbon">
+                            New Restaurant
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="row">
+
+                                <div class="col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-12"><div class="order-init-label">Restaurant Name</div></div>
+                                        <div class="col-xs-12">
+                                            <md-whiteframe class="md-whiteframe-1dp order-init-white-frame">
+                                                <input ng-if="true" ng-model="vm.workingRestaurant.name" class="restaurant-data-entry-field" />
+                                            </md-whiteframe>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12">
+
+                                    <div class="row">
+                                        <div class="col-xs-12"><div class="order-init-label">Cusine offered at this restaurant</div></div>
+                                        <div class="col-xs-12">
+                                                <div orientation="vertical" isteven-multi-select style="margin-top:-5px;"
+                                                     input-model="vm.cuisines"
+                                                     output-model="vm.workingRestaurant.cuisineIds"
+                                                     button-label="icon name"
+                                                     item-label="icon name"
+                                                     tick-property="selected"
+                                                     output-properties="id"
+                                                     >
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-12"><div class="order-init-label">Street</div></div>
+                                        <div class="col-xs-12">
+                                            <md-whiteframe class="md-whiteframe-1dp order-init-white-frame">
+                                                <input ng-if="true" ng-model="vm.workingRestaurant.street" class="restaurant-data-entry-field" />
+                                            </md-whiteframe>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-12"><div class="order-init-label">City</div></div>
+                                        <div class="col-xs-12">
+                                            <md-whiteframe class="md-whiteframe-1dp order-init-white-frame">
+                                                <input ng-if="true" ng-model="vm.workingRestaurant.city" class="restaurant-data-entry-field" />
+                                            </md-whiteframe>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-12"><div class="order-init-label">State</div></div>
+                                        <div class="col-xs-12">
+                                            <md-whiteframe class="md-whiteframe-1dp order-init-white-frame">
+                                                <input ng-if="true" ng-model="vm.workingRestaurant.state" class="restaurant-data-entry-field" />
+                                            </md-whiteframe>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-12"><div class="order-init-label">Zip Code</div></div>
+                                        <div class="col-xs-12">
+                                            <md-whiteframe class="md-whiteframe-1dp order-init-white-frame">
+                                                <input ng-if="true" ng-model="vm.workingRestaurant.zip" class="restaurant-data-entry-field" />
+                                            </md-whiteframe>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="order-init-submit-button">
+                                <md-button type="submit" class="md-raised btn-lg md-accent"><i class="fa fa-check"></i><span>Save</span></md-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </form>
+</section>
+

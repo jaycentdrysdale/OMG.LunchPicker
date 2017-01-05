@@ -53,6 +53,9 @@ namespace OMG.LunchPicker.WebApi.Controllers
         [Route("GetRestaurant", Name = "SingleRestaurantRoute")]
         public async Task<IHttpActionResult> GetRestaurant(GetByIdCriteria criteria)
         {
+            if (criteria == null)
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest));
+
             var restaurant = await _service.GetAsync(criteria);
             if (restaurant == null)
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
@@ -62,9 +65,12 @@ namespace OMG.LunchPicker.WebApi.Controllers
 
         [HttpPost]
         [Route("SaveRestaurant", Name = "SaveRestaurantRoute")]
-        public async Task<IHttpActionResult> SaveRestaurant(SaveRestaurantCriteria critera)
+        public async Task<IHttpActionResult> SaveRestaurant(SaveRestaurantCriteria criteria)
         {
-            var result = await _service.SaveAsync(critera);
+            if (criteria == null)
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest));
+
+            var result = await _service.SaveAsync(criteria);
             return Ok(result);
         }
 
@@ -72,6 +78,9 @@ namespace OMG.LunchPicker.WebApi.Controllers
         [Route("RateRestaurant", Name = "RateRestaurantRoute")]
         public async Task<IHttpActionResult> RateRestaurant(RateRestaurantCriteria criteria)
         {
+            if (criteria == null)
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest));
+
             var result = await _service.RateAsync(criteria);
             return Ok(result);
         }

@@ -52,6 +52,20 @@ namespace OMG.LunchPicker.Services
             }
         }
 
+        public async Task<SingleItemResponse<int>> GetAverageRatingAsync()
+        {
+            try
+            {
+                var result = await _repository.GetAverageRatingAsync();
+                return SuccessResponse(result);
+            }
+            catch (Exception ex)
+            {
+                List<string> errors = new List<string>() { ex.Message.ToString() };
+                return ErrorResponse<int>(errors, false);
+            }
+        }
+
         public async Task<SingleItemResponse<dynamic>> GetAsync(GetByIdCriteria criteria)
         {
             try

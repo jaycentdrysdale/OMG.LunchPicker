@@ -18,7 +18,7 @@ namespace OMG.LunchPicker.Repository
         #region IRestaurantRepository Members
         public async Task<IQueryable<dynamic>> GetAllAsync(GetRestaurantsCriteria criteria)
         {
-            var query = UnitOfWorkAsync.RepositoryAsync<Restaurant>()
+                        var query = UnitOfWorkAsync.RepositoryAsync<Restaurant>()
             .Queryable()
             .AsNoTracking()
             .Where(r => r.IsActive == true)
@@ -44,6 +44,21 @@ namespace OMG.LunchPicker.Repository
                 query = query.Where(q => q.cuisines.Contains(criteria.Cuisine)).AsQueryable();
 
             return await Task.Run(() => query);
+        }
+
+        public async Task<int> GetAverageRatingAsync()
+        {
+            var query = UnitOfWorkAsync.RepositoryAsync<Restaurant>()
+            .Queryable()
+            .AsNoTracking()
+            .Where(r => r.IsActive == true)
+            .Select(r => new
+            {
+                rating = (int)(r.Ratings.Any() ? r.Ratings.Average(x => x.RatingValue) : 0.0)
+            });
+
+            var average = query.Where(x=>x.rating > 0).AsQueryable().Average(r => r.rating);
+            return await Task.Run(() => (int)average);
         }
 
         public async Task<dynamic> GetAsync(GetByIdCriteria criteria)
@@ -127,7 +142,7 @@ namespace OMG.LunchPicker.Repository
                 throw;
             }
 
-            
+
         }
         #endregion
 

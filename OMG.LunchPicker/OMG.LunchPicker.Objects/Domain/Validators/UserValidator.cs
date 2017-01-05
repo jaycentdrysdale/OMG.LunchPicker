@@ -25,6 +25,11 @@ namespace OMG.LunchPicker.Objects.Domain.Validators
             return await Task.Run(() => ValidateLogin(criteria, messages));
         }
 
+        public async Task<bool> ValidateAsync(GetUsersCriteria criteria, List<string> messages)
+        {
+            return await Task.Run(() => ValidateGetAll(criteria, messages));
+        }
+
         private bool ValidateLogin(LoginCriteria criteria, List<string> messages)
         {
             if (string.IsNullOrWhiteSpace(criteria.EmailOrUsername))
@@ -34,6 +39,10 @@ namespace OMG.LunchPicker.Objects.Domain.Validators
                 messages.Add("password is required");
 
             return messages.Count == 0;
+        }
+        private bool ValidateGetAll(GetUsersCriteria criteria, List<string> messages)
+        {
+            return true;
         }
 
         private bool ValidateSave(SaveUserCriteria criteria, List<string> messages)

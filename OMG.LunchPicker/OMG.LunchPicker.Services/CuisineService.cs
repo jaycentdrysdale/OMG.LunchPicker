@@ -1,4 +1,6 @@
-﻿using OMG.LunchPicker.Objects.Entities;
+﻿using OMG.LunchPicker.Objects.Domain;
+using OMG.LunchPicker.Objects.Domain.Criteria;
+using OMG.LunchPicker.Objects.Entities;
 using OMG.LunchPicker.Repository;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace OMG.LunchPicker.Services
 {
-    public class CuisineService : ICuisineService
+    public class CuisineService :ServiceBase, ICuisineService
     {
         #region Private Fields
         /// <summary>
@@ -29,9 +31,21 @@ namespace OMG.LunchPicker.Services
         #endregion
 
         #region ICuisineService Members
-        public async Task<IQueryable<dynamic>> GetAllAsync()
+        public async Task<MultiItemsResponse<dynamic>> GetAllAsync(PagableCriteriaBase criteria)
         {
-            return await _repository.GetAllAsync();
+             try
+            {
+                //if (await _validator.ValidateAsync(criteria, ValidationMessages) == false)
+                //    return ErrorResponse<dynamic>(ValidationMessages);
+
+                var result = await _repository.GetAllAsync();
+                return SuccessResponse(result, criteria);
+            }
+            catch (Exception ex)
+            {
+                List<string> errors = new List<string>() { ex.Message.ToString() };
+                return ErrorResponse<dynamic>(errors);
+            }
         }
 
         public async Task<dynamic> GetAsync(int id)

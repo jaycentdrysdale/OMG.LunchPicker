@@ -5,6 +5,7 @@ using OMG.LunchPicker.Objects.Entities;
 using OMG.LunchPicker.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OMG.LunchPicker.Services
@@ -57,6 +58,22 @@ namespace OMG.LunchPicker.Services
             }
         }
 
+        public async Task<MultiItemsResponse<dynamic>> GetAllAsync(GetUsersCriteria criteria)
+        {
+            try
+            {
+                if (await _validator.ValidateAsync(criteria, ValidationMessages) == false)
+                    return ErrorResponse<dynamic>(ValidationMessages);
+
+                var result = await _repository.GetAllAsync(criteria);
+                return SuccessResponse(result.ToList(), criteria);
+            }
+            catch (Exception ex)
+            {
+                List<string> errors = new List<string>() { ex.Message.ToString() };
+                return ErrorResponse<dynamic>(errors);
+            }
+        }
         public async Task<SingleItemResponse<User>> AuthenticateAsync(LoginCriteria criteria)
         {
             try
@@ -95,9 +112,6 @@ namespace OMG.LunchPicker.Services
                 return ErrorResponse<int>(errors, false);
             }
         }
-
-
-
         #endregion
     }
 }

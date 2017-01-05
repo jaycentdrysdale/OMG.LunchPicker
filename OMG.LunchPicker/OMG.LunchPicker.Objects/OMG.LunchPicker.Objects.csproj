@@ -49,6 +49,7 @@
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
     <Compile Include="Domain\Criteria\GetByIdCriteria.cs" />
+    <Compile Include="Domain\Criteria\GetUsersCriteria.cs" />
     <Compile Include="Domain\Criteria\LoginCriteria.cs" />
     <Compile Include="Domain\Criteria\RateRestaurantCriteria.cs" />
     <Compile Include="Domain\Criteria\SaveRestaurantCriteria.cs" />
@@ -67,7 +68,6 @@
     <Compile Include="Entities\User.cs" />
     <Compile Include="Domain\Criteria\GetRestaurantsCriteria.cs" />
     <Compile Include="IAuditable.cs" />
-    <Compile Include="IValidate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

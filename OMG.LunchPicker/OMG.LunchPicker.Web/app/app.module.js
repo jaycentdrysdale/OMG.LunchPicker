@@ -13,7 +13,8 @@
     "kendo.directives",
     "underscore",
     "ui.grid",
-    "ui.grid.draggable-rows"
+    "ui.grid.draggable-rows",
+    "isteven-multi-select"
 ]);
 
 // kendo.directives : http://docs.telerik.com/kendo-ui/web/grid/how-to/AngularJS/custom-edit-toolbar-button

@@ -24,15 +24,15 @@
         var date = new Date();
         var year = date.getFullYear();
         var main = {
-            brand: 'Local Media',
-            name: 'Lisa',
+            brand: 'OMG Lunch Picker',
+            name: 'Guest',
             year: year,
-            layout: 'wide',                                 // 'boxed', 'wide'
-            menu: 'vertical',                               // 'horizontal', 'vertical', 'collapsed'
+            layout: 'boxed',                                 // 'boxed', 'wide'
+            menu: 'horizontal',                             // 'horizontal', 'vertical', 'collapsed'
             fixedHeader: true,                              // true, false
             fixedSidebar: true,                             // true, false
             pageTransition: pageTransitionOpts[0],          // 0, 1, 2, 3... and build your own
-            skin: '12'                                      // 11,12,13,14,15,16; 21,22,23,24,25,26; 31,32,33,34,35,36
+            skin: '24'                                      // 11,12,13,14,15,16; 21,22,23,24,25,26; 31,32,33,34,35,36
         };
         var color = {
             primary: '#009688',

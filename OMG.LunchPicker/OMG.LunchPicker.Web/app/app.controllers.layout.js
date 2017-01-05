@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('app')
-    .controller('AppCtrl', ['$scope', '$rootScope', '$state', '$document', 'orderUtils', '$mdDialog', 'appConfig', AppCtrl]) // overall control
+    .controller('AppCtrl', ['$scope', '$rootScope', '$state', '$document', 'restaurantAgent', '$mdDialog', 'appConfig', AppCtrl]) // overall control
 
-    function AppCtrl($scope, $rootScope, $state, $document, orderUtils, $mdDialog, appConfig) {
+    function AppCtrl($scope, $rootScope, $state, $document, restaurantAgent, $mdDialog, appConfig) {
 
         $scope.pageTransitionOpts = appConfig.pageTransitionOpts;
         $scope.main = appConfig.main;
@@ -52,12 +52,24 @@
                 orderUtils.redirectToOrderRoute();// redirectToRoute('createorder');
         }
 
+        $scope.requestNewRestaurant = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            var pendingChanges = restaurantAgent.sessionHasPendingChanges();
+            if (pendingChanges == true) {
+                restaurantAgent.confirmAndSaveRestaurant($event, true);
+            }
+            else
+                restaurantAgent.redirectToRestaurantRoute();// redirectToRoute('createorder');
+        }
+
         var notifyPendingChanges = function ($event) {
             $mdDialog.show(
                 $mdDialog.alert()
                 .clickOutsideToClose(true)
-                .title('Order has unsaved changes')
-                .textContent('The current order has unsaved chnages.  Please save or discard changes before continuing')
+                .title('Restaurant has unsaved changes')
+                .textContent('The current restaurant has unsaved changes.  Please save or discard changes before continuing')
                 .ariaLabel('Unsaved changes')
                 .ok('Ok')
                 .targetEvent($event)

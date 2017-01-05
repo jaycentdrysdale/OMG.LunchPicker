@@ -12,16 +12,5 @@ namespace OMG.LunchPicker.Objects.Domain.Criteria
         public string PartialName { get; set; }
         public double? RatingValue { get; set; }
         public string Cuisine { get; set; }
-
-        public async Task<List<string>> ValidateAsync()
-        {
-            return await Task.Run(() => DoValidate());
-        }
-
-        private List<string> DoValidate()
-        {
-            List<string> messages = new List<string>();
-            return messages;
-        }
     }
 }

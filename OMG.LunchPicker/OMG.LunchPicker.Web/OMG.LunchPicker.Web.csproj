@@ -157,7 +157,13 @@
   <ItemGroup>
     <Content Include="app\app.controllers.dashboard.js" />
     <Content Include="app\app.controllers.fake.js" />
+    <Content Include="app\app.controllers.restaurant.js" />
+    <Content Include="app\app.services.cuisine.js" />
+    <Content Include="app\app.services.dashboard.js" />
     <Content Include="app\app.services.fake.js" />
+    <Content Include="app\app.services.restaurant.js" />
+    <Content Include="app\app.agents.restaurant.js" />
+    <Content Include="app\IStevensMultiSelect.js" />
     <Content Include="app\partials\buylines\spotBuyline.html" />
     <Content Include="app\partials\header.html" />
     <Content Include="app\partials\lookups\accountExecutive.html" />
@@ -166,10 +172,11 @@
     <Content Include="app\partials\lookups\product.html" />
     <Content Include="app\partials\orderInit.html" />
     <Content Include="app\partials\sidebar.html" />
-    <Content Include="app\app.utils.order.js" />
     <Content Include="app\views\create-order.html" />
+    <Content Include="app\views\edit-restaurant.html" />
     <Content Include="app\views\fake.html" />
     <Content Include="app\views\orders.html" />
+    <Content Include="css\IStevensMultiSelect.css" />
     <Content Include="css\loader.css" />
     <Content Include="css\main.css" />
     <Content Include="css\ui.css" />
@@ -202,6 +209,7 @@
     <Content Include="app\data\sellers.json" />
     <Content Include="app\data\stations.json" />
     <Content Include="bower.json" />
+    <Content Include="app\data\newRestaurant.json" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

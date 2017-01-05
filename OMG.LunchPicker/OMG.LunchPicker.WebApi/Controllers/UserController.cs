@@ -41,6 +41,9 @@ namespace OMG.LunchPicker.WebApi.Controllers
         [Route("GetUser", Name = "SingleUserRoute")]
         public async Task<IHttpActionResult> GetUser(GetByIdCriteria criteria)
         {
+            if (criteria == null)
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest));
+
             var user = await _service.GetAsync(criteria);
             if (user == null)
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
@@ -57,6 +60,9 @@ namespace OMG.LunchPicker.WebApi.Controllers
         [Route("SaveUser", Name = "SaveUserRoute")]
         public async Task<IHttpActionResult> SaveUser(SaveUserCriteria criteria)
         {
+            if (criteria == null)
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest));
+
             var result = await _service.SaveAsync(criteria);
             return Ok(result);
         }
@@ -65,6 +71,9 @@ namespace OMG.LunchPicker.WebApi.Controllers
         [Route("AuthenticateUser", Name = "AuthenticateUserRoute")]
         public async Task<IHttpActionResult> AuthenticateUser(LoginCriteria criteria)
         {
+            if (criteria == null)
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest));
+
             var result = await _service.AuthenticateAsync(criteria);
             return Ok(result);
         }

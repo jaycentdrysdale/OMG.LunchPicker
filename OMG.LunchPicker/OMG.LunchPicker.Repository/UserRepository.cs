@@ -88,6 +88,24 @@ namespace OMG.LunchPicker.Repository
 
             return await Task.Run(() => user);
         }
+        public async Task<IQueryable<dynamic>> GetAllAsync(GetUsersCriteria criteria)
+        {
+            var query = UnitOfWorkAsync.RepositoryAsync<User>()
+            .Queryable()
+            .Include(u => u.Ratings)
+            .AsNoTracking()
+            .Where(u => u.IsActive == true)
+            .Select(u => new
+            {
+                u.Id,
+                u.UserName,
+                u.EmailAddress,
+                u.DateCreated,
+                Ratings = u.Ratings.Select(r => new { r.RestaurantId, r.Restaurant.Name, r.RatingValue, r.DateCreated })
+            });
+
+            return await Task.Run(() => query);
+        }
 
         private async Task<bool> MapToEntity(User user, SaveUserCriteria criteria)
         {
@@ -112,6 +130,5 @@ namespace OMG.LunchPicker.Repository
 
             return await Task.Run(() => userExists);
         }
-
     }
 }

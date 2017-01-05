@@ -91,6 +91,10 @@ div.inline {
      max-width: 140px;
 }
 
+.restaurant-data-entry-field{
+     max-width: 340px;
+}
+
 .order-lookup-info{
     padding-top:5px; padding-left:25px; color:silver; font-style:italic; height:50px;
 }
