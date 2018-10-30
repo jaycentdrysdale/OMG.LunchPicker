@@ -70,7 +70,5 @@
         restaurantServiceFactory.getNewRestaurantStub = _getNewRestaurantStub;
 
         return restaurantServiceFactory;
-
     }]);
-
 })();

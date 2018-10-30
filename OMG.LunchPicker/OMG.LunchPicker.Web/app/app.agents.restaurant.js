@@ -50,8 +50,6 @@
             });
             workingRestaurant.cuisineIds = ids;
 
-            alert(JSON.stringify(workingRestaurant.cuisineIds));
-
             restaurantService.saveRestaurant(workingRestaurant)
             .then(function (response) {
                 if (response.isSuccess === true) {
@@ -70,7 +68,6 @@
                 toastr.error(JSON.stringify(err));
             });
         }
-
 
         var getErrors = function (items) {
             var errs = ""
@@ -119,8 +116,6 @@
         exports.confirmAndSaveRestaurant = _confirmAndSaveRestaurant;
         exports.initNewRestaurant = _initNewRestaurant;
         
-
         return exports;
     }
-
 })();
