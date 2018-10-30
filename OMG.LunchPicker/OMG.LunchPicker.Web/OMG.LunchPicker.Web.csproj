@@ -196,6 +196,8 @@
     <Content Include="app\app.module.form.js" />
     <Content Include="app\app.controllers.form.js" />
     <Content Include="app\app.directives.form.js" />
+    <Content Include="js\angular-ui-router.min.js" />
+    <Content Include="js\jquery.steps.min.js" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
