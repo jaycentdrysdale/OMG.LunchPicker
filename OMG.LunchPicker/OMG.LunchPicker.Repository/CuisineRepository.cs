@@ -1,4 +1,5 @@
-﻿using OMG.LunchPicker.Objects.Entities;
+﻿using OMG.LunchPicker.Objects.Domain.Criteria;
+using OMG.LunchPicker.Objects.Entities;
 using Repository.Pattern.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -12,37 +13,47 @@ namespace OMG.LunchPicker.Repository
     public class CuisineRepository : DefaultRepository, ICuisineRepository
     {
         public CuisineRepository(IUnitOfWorkAsync unitOfWorkAsync) : base(unitOfWorkAsync) { }
-        public async Task<IQueryable<dynamic>> GetAllAsync()
+        public async Task<IQueryable<dynamic>> GetAllAsync(GetCuisinesCriteria criteria)
         {
             var query = UnitOfWorkAsync.RepositoryAsync<Cuisine>()
             .Queryable()
             .AsNoTracking()
-            .Where(c => c.IsActive == true)          
+            .Where(c => c.IsActive == criteria.IsActive && string.IsNullOrEmpty(criteria.PartialName) ? true : c.Name.Contains(criteria.PartialName))          
             .OrderBy(r => r.Name);
+
             return await Task.Run(() => query);
         }
 
-        public async Task<dynamic> GetAsync(int id)
+        public async Task<dynamic> GetAsync(GetByIdCriteria criteria)
         {
             var query = UnitOfWorkAsync.RepositoryAsync<Cuisine>()
             .Queryable()
             .AsNoTracking()
-            .Where(r => r.IsActive == true && r.Id == id)
+            .Where(r => r.IsActive == true && r.Id == criteria.Id)
             .SingleOrDefault();
 
             return await Task.Run(() => query);
         }
 
-        public async Task<int> SaveAsync(Cuisine cuisine)
+        public async Task<int> SaveAsync(SaveCuisineCriteria criteria)
         {
             UnitOfWorkAsync.BeginTransaction();
+            Cuisine cuisine;
             try
             {
-
-                if (cuisine.Id != 0)
-                    UnitOfWorkAsync.RepositoryAsync<Cuisine>().Update(cuisine);
-                else
+                if (criteria.Id == 0)
+                {
+                    cuisine = new Cuisine();
+                    await MapToEntity(cuisine, criteria);
+                    cuisine.IsActive = true;
                     UnitOfWorkAsync.RepositoryAsync<Cuisine>().Insert(cuisine);
+                }
+                else
+                {
+                    cuisine = await GetAsync(new GetByIdCriteria() { Id = criteria.Id });
+                    await MapToEntity(cuisine, criteria);
+                    UnitOfWorkAsync.RepositoryAsync<Cuisine>().Update(cuisine);
+                }
 
                 await UnitOfWorkAsync.SaveChangesAsync();
                 UnitOfWorkAsync.Commit();
@@ -50,13 +61,19 @@ namespace OMG.LunchPicker.Repository
             catch (Exception e)
             {
                 UnitOfWorkAsync.Rollback();
-                //if (!e.InnerException.InnerException.GetType().IsAssignableFrom(typeof(SqlException))) throw;
-                //var exception = (SqlException)e.InnerException.InnerException;
-                //if (exception.Number == 2627)
-                //    throw new ApplicationException("Ad Account Id is not unique");
                 throw;
             }
             return cuisine.Id;
         }
+
+        # region Helper Methods
+        private async Task<bool> MapToEntity(Cuisine cuisine, SaveCuisineCriteria criteria)
+        {
+            cuisine.Id = criteria.Id;
+            cuisine.Name = criteria.Name;
+            return await Task.Run(() => true);
+        }
+        #endregion
+
     }
 }

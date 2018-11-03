@@ -35,10 +35,11 @@ namespace OMG.LunchPicker.Services
         #endregion
 
         #region IRestaurantService Members
-        public async Task<MultiItemsResponse<dynamic>> GetAllAsync(GetRestaurantsCriteria criteria)
+        public async Task<MultiItemsResponse<dynamic>> GetAllAsync(GetRestaurantsCriteria criteria = null)
         {
             try
             {
+                criteria = await InitCriteria(criteria);
                 if (await _validator.ValidateAsync(criteria, ValidationMessages) == false)
                     return ErrorResponse<dynamic>(ValidationMessages);
 
@@ -112,10 +113,30 @@ namespace OMG.LunchPicker.Services
             }
             catch (Exception ex)
             {
-
                 List<string> errors = new List<string>() { ex.Message.ToString() };
                 return ErrorResponse<dynamic>(errors, false);
             }
+        }
+        #endregion
+
+        #region Private Methods
+        private async Task<GetRestaurantsCriteria> InitCriteria(GetRestaurantsCriteria criteria)
+        {
+            if (criteria == null)
+            {
+                criteria = new GetRestaurantsCriteria()
+                {
+                    Cuisine = null,
+                    IsActive = true,
+                    PartialName = null,
+                    RatingValue = null,
+                    Reverse = false,
+                    Skip = 0,
+                    SortField = null,
+                    Take = int.MaxValue
+                };
+            }
+            return await Task.Run(() => criteria);
         }
         #endregion
     }

@@ -18,10 +18,10 @@ namespace OMG.LunchPicker.Repository
         #region IRestaurantRepository Members
         public async Task<IQueryable<dynamic>> GetAllAsync(GetRestaurantsCriteria criteria)
         {
-                        var query = UnitOfWorkAsync.RepositoryAsync<Restaurant>()
+            var query = UnitOfWorkAsync.RepositoryAsync<Restaurant>()
             .Queryable()
             .AsNoTracking()
-            .Where(r => r.IsActive == true)
+            .Where(r => r.IsActive == criteria.IsActive)
             .Select(r => new
             {
                 r.Id,

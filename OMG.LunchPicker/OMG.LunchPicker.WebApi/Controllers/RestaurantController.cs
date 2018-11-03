@@ -40,10 +40,10 @@ namespace OMG.LunchPicker.WebApi.Controllers
         /// <param name="criteria">The criteria.</param>
         /// <returns></returns>
         [HttpPost, Route("GetRestaurants", Name = "RestaurantsRoute")]
-        public async Task<IHttpActionResult> GetActiveRestaurants(GetRestaurantsCriteria criteria)
+        public async Task<IHttpActionResult> GetRestaurants(GetRestaurantsCriteria criteria)
         {
-            if (criteria == null)
-                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest));
+            //if (criteria == null)
+            //    return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest));
 
             var result = await _service.GetAllAsync(criteria);
             return Ok(result);

@@ -10,6 +10,7 @@ namespace OMG.LunchPicker.Objects.Domain.Criteria
     public class GetRestaurantsCriteria : PagableCriteriaBase
     {
         public string PartialName { get; set; }
+        public bool IsActive { get; set; }
         public double? RatingValue { get; set; }
         public string Cuisine { get; set; }
     }

@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace OMG.LunchPicker.Objects.Domain.Criteria
 {
-    public class GetUsersCriteria : PagableCriteriaBase
+    public class GetCuisinesCriteria : PagableCriteriaBase
     {
-        public string PartialUserNameOrEmail { get; set; }
+        #region Ctors
+        public string PartialName { get; set; }
         public bool IsActive { get; set; }
+        #endregion
     }
 }

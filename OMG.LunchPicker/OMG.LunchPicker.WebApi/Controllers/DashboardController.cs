@@ -10,6 +10,7 @@ using System.Web.Http;
 namespace OMG.LunchPicker.WebApi.Controllers
 {
     [RoutePrefix("api/Dashboard")]
+
     public class DashboardController : BaseApiController
     {
         #region Private Readonly Fields
@@ -35,38 +36,12 @@ namespace OMG.LunchPicker.WebApi.Controllers
         [HttpGet, Route("GetDashboard", Name = "DashboardRoute")]
         public async Task<IHttpActionResult> GetDashboard()
         {
-            var restaurantResponse = await _restaurantService.GetAllAsync(new GetRestaurantsCriteria()
-            {
-                Cuisine = null,
-                PartialName = null,
-                RatingValue = null,
-                Reverse = false,
-                Skip = 0,
-                SortField = null,
-                Take = int.MaxValue
-            });
-
+            var restaurantResponse = await _restaurantService.GetAllAsync();
+            var cuisineResponse = await _cuisineService.GetAllAsync();
+            var usersResponse = await _userService.GetAllAsync();
             var averageRatingResponse = await _restaurantService.GetAverageRatingAsync();
-
-            var cuisineResponse = await _cuisineService.GetAllAsync(new PagableCriteriaBase()
-            {
-                Reverse = false,
-                Skip = 0,
-                Take = int.MaxValue,
-                SortField = null
-            });
-
-            var usersResponse = await _userService.GetAllAsync(new GetUsersCriteria()
-            {
-                PartialUserNameOrEmail = null,
-                Reverse = false,
-                Skip = 0,
-                Take = int.MaxValue,
-                SortField = null
-            });
-
+            
             var dashboard = new {AverageRating = averageRatingResponse.Result, Users = usersResponse.Results, Restaurants = restaurantResponse.Results, Cuisines = cuisineResponse.Results };
-           
             return Ok(dashboard);
         }
         #endregion

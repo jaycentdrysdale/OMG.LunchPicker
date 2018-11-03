@@ -11,8 +11,8 @@ namespace OMG.LunchPicker.Services
 {
     public interface ICuisineService
     {
-        Task<dynamic> GetAsync(int id);
-        Task<MultiItemsResponse<dynamic>> GetAllAsync(PagableCriteriaBase criteria);
-        Task<int> SaveAsync(Cuisine cuisine);
+        Task<SingleItemResponse<dynamic>> GetAsync(GetByIdCriteria criteria);
+        Task<MultiItemsResponse<dynamic>> GetAllAsync(GetCuisinesCriteria criteria = null);
+        Task<SingleItemResponse<int>> SaveAsync(SaveCuisineCriteria critera);
     }
 }

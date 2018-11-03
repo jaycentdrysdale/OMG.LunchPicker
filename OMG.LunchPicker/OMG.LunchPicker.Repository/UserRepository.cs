@@ -94,7 +94,7 @@ namespace OMG.LunchPicker.Repository
             .Queryable()
             .Include(u => u.Ratings)
             .AsNoTracking()
-            .Where(u => u.IsActive == true)
+            .Where(u => u.IsActive == criteria.IsActive)
             .Select(u => new
             {
                 u.Id,
@@ -104,16 +104,30 @@ namespace OMG.LunchPicker.Repository
                 Ratings = u.Ratings.Select(r => new { r.RestaurantId, r.Restaurant.Name, r.RatingValue, r.DateCreated })
             });
 
+            if (!string.IsNullOrEmpty(criteria.PartialUserNameOrEmail))
+                query = query.Where(q => q.UserName.Contains(criteria.PartialUserNameOrEmail) 
+                    || q.EmailAddress.Contains(criteria.PartialUserNameOrEmail)).AsQueryable();
+
             return await Task.Run(() => query);
         }
 
         private async Task<bool> MapToEntity(User user, SaveUserCriteria criteria)
         {
-            user.Id = criteria.Id;
-            user.UserName = criteria.Username;
-            user.EmailAddress = criteria.EmailAddress;
-            user.Password = criteria.Password;
-            return true;
+
+            return await Task.Run(() => {
+                user.Id = criteria.Id;
+                user.UserName = criteria.Username;
+                user.EmailAddress = criteria.EmailAddress;
+                user.Password = criteria.Password;
+                return true;
+            });
+
+            //user.Id = criteria.Id;
+            //user.UserName = criteria.Username;
+            //user.EmailAddress = criteria.EmailAddress;
+            //user.Password = criteria.Password;
+            //return true;
+
         }
 
         private async Task<bool> EmailandUserNameTaken(int id, string userName, string emailAddress)

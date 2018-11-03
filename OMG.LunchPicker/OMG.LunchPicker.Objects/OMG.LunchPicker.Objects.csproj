@@ -49,15 +49,19 @@
       <Link>Properties\VersionInfo.cs</Link>
     </Compile>
     <Compile Include="Domain\Criteria\GetByIdCriteria.cs" />
+    <Compile Include="Domain\Criteria\GetCuisinesCriteria.cs" />
     <Compile Include="Domain\Criteria\GetUsersCriteria.cs" />
     <Compile Include="Domain\Criteria\LoginCriteria.cs" />
     <Compile Include="Domain\Criteria\RateRestaurantCriteria.cs" />
+    <Compile Include="Domain\Criteria\SaveCuisineCriteria.cs" />
     <Compile Include="Domain\Criteria\SaveRestaurantCriteria.cs" />
     <Compile Include="Domain\Criteria\SaveUserCriteria.cs" />
     <Compile Include="Domain\Criteria\PagableCriteriaBase.cs" />
     <Compile Include="Domain\MultiItemsResponse.cs" />
     <Compile Include="Domain\ResponseBase.cs" />
     <Compile Include="Domain\SingleItemResponse.cs" />
+    <Compile Include="Domain\Validators\CuisineValidator.cs" />
+    <Compile Include="Domain\Validators\ICuisineValidator.cs" />
     <Compile Include="Domain\Validators\IRestaurantValidator.cs" />
     <Compile Include="Domain\Validators\IUserValidator.cs" />
     <Compile Include="Domain\Validators\RestaurantValidator.cs" />

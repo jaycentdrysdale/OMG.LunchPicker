@@ -33,6 +33,21 @@ namespace OMG.LunchPicker.WebApi.Controllers
 
         #region Public Methods
         /// <summary>
+        /// Gets the users.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns></returns>
+        [HttpPost, Route("GetUsers", Name = "UsersRoute")]
+        public async Task<IHttpActionResult> GetRestaurants(GetUsersCriteria criteria)
+        {
+            //if (criteria == null)
+            //    return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest));
+
+            var result = await _service.GetAllAsync(criteria);
+            return Ok(result);
+        }
+
+        /// <summary>
         /// Gets the user.
         /// </summary>
         /// <param name="criteria">The criteria.</param>

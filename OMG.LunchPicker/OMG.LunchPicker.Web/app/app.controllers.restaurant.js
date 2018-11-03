@@ -43,6 +43,7 @@
             vm.selectedCuisines = [];
 
             var criteria = {
+                "isActive":true,
                 "skip": 0,
                 "take": 100,
                 "sortField": null,

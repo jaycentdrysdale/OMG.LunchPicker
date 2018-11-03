@@ -98,6 +98,7 @@ namespace OMG.LunchPicker.Web
             // <!-- service validator bindings-->
             kernel.Bind<IUserValidator>().To<UserValidator>().InRequestScope();
             kernel.Bind<IRestaurantValidator>().To<RestaurantValidator>().InRequestScope();
+            kernel.Bind<ICuisineValidator>().To<CuisineValidator>().InRequestScope();
 
             //kernel.Bind<AuthContext>().To<AuthContext>().InRequestScope();
             //kernel.Bind<IAuthRepository>().To<AuthRepository>().InRequestScope();

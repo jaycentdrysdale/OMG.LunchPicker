@@ -58,10 +58,12 @@ namespace OMG.LunchPicker.Services
             }
         }
 
-        public async Task<MultiItemsResponse<dynamic>> GetAllAsync(GetUsersCriteria criteria)
+        public async Task<MultiItemsResponse<dynamic>> GetAllAsync(GetUsersCriteria criteria = null)
         {
             try
             {
+                criteria = await InitCriteria(criteria);
+
                 if (await _validator.ValidateAsync(criteria, ValidationMessages) == false)
                     return ErrorResponse<dynamic>(ValidationMessages);
 
@@ -100,7 +102,7 @@ namespace OMG.LunchPicker.Services
         {
             try
             {
-                if(await _validator.ValidateAsync(criteria, ValidationMessages) == false)
+                if (await _validator.ValidateAsync(criteria, ValidationMessages) == false)
                     return ErrorResponse<int>(ValidationMessages, false);
 
                 var result = await _repository.SaveAsync(criteria);
@@ -111,6 +113,25 @@ namespace OMG.LunchPicker.Services
                 List<string> errors = new List<string>() { ex.Message.ToString() };
                 return ErrorResponse<int>(errors, false);
             }
+        }
+        #endregion
+
+        #region Private Methods
+        private async Task<GetUsersCriteria> InitCriteria(GetUsersCriteria criteria)
+        {
+            if (criteria == null)
+            {
+                criteria = new GetUsersCriteria()
+                {
+                    IsActive = true,
+                    PartialUserNameOrEmail = null,
+                    Reverse = false,
+                    Skip = 0,
+                    SortField = null,
+                    Take = int.MaxValue
+                };
+            }
+            return await Task.Run(() => criteria);
         }
         #endregion
     }

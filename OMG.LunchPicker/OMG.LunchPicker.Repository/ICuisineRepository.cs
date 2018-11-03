@@ -1,4 +1,5 @@
-﻿using OMG.LunchPicker.Objects.Entities;
+﻿using OMG.LunchPicker.Objects.Domain.Criteria;
+using OMG.LunchPicker.Objects.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace OMG.LunchPicker.Repository
 {
     public interface ICuisineRepository
     {
-        Task<dynamic> GetAsync(int id);
-        Task<IQueryable<dynamic>> GetAllAsync();
-        Task<int> SaveAsync(Cuisine restaurant);
+        Task<dynamic> GetAsync(GetByIdCriteria criteria);
+        Task<IQueryable<dynamic>> GetAllAsync(GetCuisinesCriteria criteria);
+        Task<int> SaveAsync(SaveCuisineCriteria criteria);
     }
 }

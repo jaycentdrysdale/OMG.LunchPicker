@@ -39,7 +39,7 @@ namespace OMG.LunchPicker.WebApi.Controllers
         /// <param name="criteria">The criteria.</param>
         /// <returns></returns>
         [HttpPost, Route("GetCuisines", Name = "CuisinesRoute")]
-        public async Task<IHttpActionResult> GetActiveCuisines(PagableCriteriaBase criteria)
+        public async Task<IHttpActionResult> GetCuisines(GetCuisinesCriteria criteria)
         {
             if (criteria == null)
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest));
@@ -48,41 +48,17 @@ namespace OMG.LunchPicker.WebApi.Controllers
             return Ok(result);
         }
 
-        //[HttpPost]
-        //[Route("GetRestaurant", Name = "SingleRestaurantRoute")]
-        //public async Task<IHttpActionResult> GetRestaurant(GetByIdCriteria criteria)
-        //{
-        //    if (criteria == null)
-        //        return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest));
 
-        //    var restaurant = await _service.GetAsync(criteria);
-        //    if (restaurant == null)
-        //        return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
+        [HttpPost]
+        [Route("SaveCuisine", Name = "SaveCuisineRoute")]
+        public async Task<IHttpActionResult> SaveCuisine(SaveCuisineCriteria criteria)
+        {
+            if (criteria == null)
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest));
 
-        //    return Ok(restaurant);
-        //}
-
-        //[HttpPost]
-        //[Route("SaveRestaurant", Name = "SaveRestaurantRoute")]
-        //public async Task<IHttpActionResult> SaveRestaurant(SaveRestaurantCriteria criteria)
-        //{
-        //    if (criteria == null)
-        //        return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest));
-
-        //    var result = await _service.SaveAsync(criteria);
-        //    return Ok(result);
-        //}
-
-        //[HttpPost]
-        //[Route("RateRestaurant", Name = "RateRestaurantRoute")]
-        //public async Task<IHttpActionResult> RateRestaurant(RateRestaurantCriteria criteria)
-        //{
-        //    if (criteria == null)
-        //        return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest));
-
-        //    var result = await _service.RateAsync(criteria);
-        //    return Ok(result);
-        //}
+            var result = await _service.SaveAsync(criteria);
+            return Ok(result);
+        }
         #endregion
     }
 }
