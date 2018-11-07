@@ -2,25 +2,25 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:OMG.LunchPicker.Xamarin"
-             x:Class="OMG.LunchPicker.Xamarin.MainPage">
+             x:Class="OMG.LunchPicker.Xamarin.MainPage" BackgroundColor="LightSteelBlue">
 
     <ContentPage.BindingContext>
         <local:Dashboard />
     </ContentPage.BindingContext>
 
-    
-    <StackLayout Orientation="Vertical" >
-        <StackLayout Orientation="Horizontal" Padding="10" Spacing="5" HorizontalOptions="FillAndExpand">
-            <StackLayout Orientation="Vertical" BackgroundColor="HotPink" Padding="5" HorizontalOptions="FillAndExpand">
+
+    <StackLayout Orientation="Vertical" Spacing="0" >
+        <StackLayout Orientation="Horizontal" Padding="10" Spacing="0" HorizontalOptions="FillAndExpand" BackgroundColor="HotPink">
+            <StackLayout Orientation="Vertical" BackgroundColor="Transparent"  Padding="5" HorizontalOptions="FillAndExpand">
                 <Label Text="Restaurants" TextColor="White" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                <Label TextColor="Black" Text="{Binding RestaurantCount, Mode=OneWay}" HorizontalTextAlignment="Center" Margin="0,5,0,10" />
+                <Label TextColor="Black" Text="{Binding RestaurantCount, Mode=OneWay}" HorizontalTextAlignment="Center"  Margin="0,5,0,10" />
             </StackLayout>
             <StackLayout Orientation="Vertical" BackgroundColor="HotPink"  Padding="5" HorizontalOptions="FillAndExpand">
                 <Label Text="People" TextColor="White" FontAttributes="Bold" HorizontalTextAlignment="Center" />
                 <Label TextColor="Black" Text="{Binding PeopleCount, Mode=OneWay}" HorizontalTextAlignment="Center" Margin="0,5,0,10" />
             </StackLayout>
             <StackLayout Orientation="Vertical" BackgroundColor="HotPink"  Padding="5" HorizontalOptions="FillAndExpand">
-                <Label Text="Cuisnes" TextColor="White" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                <Label Text="Cuisines" TextColor="White" FontAttributes="Bold" HorizontalTextAlignment="Center" />
                 <Label TextColor="Black" Text="{Binding CuisineCount, Mode=OneWay}" HorizontalTextAlignment="Center" Margin="0,5,0,10" />
             </StackLayout>
             <StackLayout Orientation="Vertical" BackgroundColor="HotPink"  Padding="5" HorizontalOptions="FillAndExpand">
@@ -28,8 +28,11 @@
                 <Label TextColor="Black" Text="{Binding AvgRating, Mode=OneWay}" HorizontalTextAlignment="Center" Margin="0,5,0,10"  />
             </StackLayout>            
         </StackLayout>
-        <Label x:Name="lblMessage" Text="OMG Lunch Picker" VerticalOptions="Center" HorizontalOptions="Center" />
-        <Button x:Name="btnLoad" Text="Load" Clicked="OnClickedLoad"></Button>
+        <StackLayout Orientation="Vertical" Spacing="0" Padding="10">
+            
+            <Label x:Name="lblMessage" Text="OMG Lunch Picker" VerticalOptions="Center" HorizontalOptions="Center" />
+            <Button x:Name="btnLoad" Text="Load" Clicked="OnClickedLoad"></Button>
+        </StackLayout>
     </StackLayout>
 
 </ContentPage>

@@ -18,20 +18,7 @@ namespace OMG.LunchPicker.Xamarin
 
         private async void OnClickedLoad(object sender, EventArgs e)
         {
-            string uri = "https://jsonplaceholder.typicode.com/todos";
-            lblMessage.Text = "Loading Items";
-            HttpClient client;
-            client = new HttpClient();
-            client.MaxResponseContentBufferSize = 256000;
-
-            var endPoint = new Uri(uri);
-            var response = await client.GetAsync(uri);
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                var Items = JsonConvert.DeserializeObject<List<dynamic>>(content);
-                this.lblMessage.Text = Items.Count().ToString();
-            }
+            
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,30 +25,43 @@ namespace OMG.LunchPicker.Xamarin
         #region Ctors
         public Dashboard()
         {
-            LoadRestaurants();
+            Task.Run(() => Execute());
         }
         #endregion
 
         #region Methods
-        private async void LoadRestaurants()
+        private async void Execute()
         {
-            string uri = "http://omglunchpickerweb20181104111136.azurewebsites.net/api/Dashboard/GetDashboard";
-            HttpClient client;
-            client = new HttpClient();
-            client.MaxResponseContentBufferSize = 256000;
-
-            var endPoint = new Uri(uri);
-            var response = await client.GetAsync(uri);
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                var Items = JsonConvert.DeserializeObject<List<dynamic>>(content);
-                await Task.Run(() =>
-                    RestaurantCount = Items.Count
-                );
-
-            }
+            MyDashboard model = null;
+            var client = new HttpClient();
+            var task = client.GetAsync("http://omglunchpickerweb20181104111136.azurewebsites.net/api/Dashboard/GetDashboard")
+              .ContinueWith((taskwithresponse) =>
+              {
+                  var response = taskwithresponse.Result;
+                  if (response.IsSuccessStatusCode)
+                  {
+                      var jsonString = response.Content.ReadAsStringAsync();
+                      jsonString.Wait();
+                      var rw = jsonString.Result;
+                      try
+                      {
+                          model = JsonConvert.DeserializeObject<MyDashboard>(rw);
+                          AvgRating = model.averageRating;
+                          CuisineCount = model.cuisines.Count;
+                          PeopleCount = model.users.Count;
+                          RestaurantCount = model.restaurants.Count;
+                      }
+                      catch (Exception ex)
+                      {
+                          var ms = ex.Message;
+                          int x = 1;
+                      }
+                  }
+              });
+            task.Wait();
         }
+
+
         #endregion
 
         #region Public Properties
@@ -114,7 +128,6 @@ namespace OMG.LunchPicker.Xamarin
                 return _avgRating;
             }
         }
-
         #endregion;
 
         #region INotifyPropertyChanged
@@ -123,5 +136,39 @@ namespace OMG.LunchPicker.Xamarin
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+
+
+
     }
+
+    public class MyDashboard
+    {
+        public int averageRating { get; set; }
+        public List<Cuisine> cuisines { get; set; }
+        public List<User> users { get; set; }
+        public List<dynamic> restaurants { get; set; }
+    }
+
+    public class Cuisine
+    {
+        public string name { get; set; }
+    }
+
+    public class User
+    {
+        public string userName { get; set; }
+    }
+
+    public class Restaurant
+    {
+        //public int id { get; set; }
+        //public string name { get; set; }
+        //public string street { get; set;  }
+        //public string city { get; set; }
+        //public string state { get; set; }
+        //public string zip { get; set; }
+        //public int rating { get; set; }
+        //public List<string> cuisines { get; set; }
+    }
+
 }
